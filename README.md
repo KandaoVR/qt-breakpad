@@ -39,6 +39,3 @@
 
 -----
 - contact Neil for more information neil.szj@kandaovr.com
-
-
-    /* This is a code block */

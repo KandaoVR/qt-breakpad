@@ -4,7 +4,7 @@
 2. Most of the code are extracted from [Qt Creator](https://github.com/qt-creator/qt-creator) project.
 3. The Demo includes a `QtBreakpadDemo` which crashes, launching the `QtCrashHandler` afterwards.
 
-![alt text]("https://raw.githubusercontent.com/KandaoVR/qt-breakpad/master/docs/QtBreakpadDemo-screenshot-win.png" "QtBreakpad Demo")
+![alt text](https://raw.githubusercontent.com/KandaoVR/qt-breakpad/master/docs/QtBreakpadDemo-screenshot-win.png "QtBreakpad Demo")
     
 -----
 ## Dependency

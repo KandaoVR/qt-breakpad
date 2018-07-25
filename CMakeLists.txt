@@ -129,17 +129,30 @@ if(APPLE)
     # set_source_files_properties(${ICON_FILE} 
     #     PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
+    # framework
+    find_library(corefoundation_lib CoreFoundation)
+    find_library(cfnetwork_lib CFNetwork)
+    set(FRAMEWORKS
+        ${cfnetwork_lib}
+        ${corefoundation_lib})
+
     # target
-    add_executable(QtBreakpadDemo MACOSX_BUNDLE ${SOURCES} ${BREAKPAD_SRCS} ${ICON_FILE} ${QM_FILES})
+    add_executable(QtBreakpadDemo ${SOURCES} ${BREAKPAD_SRCS} ${ICON_FILE} ${QM_FILES})
 endif(APPLE)
 
 # target on WINDOWS
 if(WIN32)
     # set(WIN_RC QtBreakpadDemo.rc)
-    add_executable(QtBreakpadDemo MACOSX_BUNDLE ${SOURCES} ${BREAKPAD_SRCS} ${WIN_RC} ${QM_FILES})
+    add_executable(QtBreakpadDemo ${SOURCES} ${BREAKPAD_SRCS} ${WIN_RC} ${QM_FILES})
 endif(WIN32)
 
-target_link_libraries(QtBreakpadDemo Qt5::Widgets Qt5::Network)
+# target on LINUX
+if(LINUX)
+    # set(WIN_RC QtBreakpadDemo.rc)
+    add_executable(QtBreakpadDemo ${SOURCES} ${BREAKPAD_SRCS} ${WIN_RC} ${QM_FILES})
+endif(LINUX)
+
+target_link_libraries(QtBreakpadDemo Qt5::Widgets Qt5::Network ${FRAMEWORKS})
 
 # configure install
 install (TARGETS QtBreakpadDemo DESTINATION Demo)

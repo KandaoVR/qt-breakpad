@@ -59,16 +59,22 @@ if(APPLE)
     #     PROPERTIES MACOSX_PACKAGE_LOCATION "Resources")
 
     # target
-    add_executable(QtCrashHandler MACOSX_BUNDLE ${SOURCES} ${ICON_FILE} ${QM_FILES})
+    add_executable(QtCrashHandler ${SOURCES} ${ICON_FILE} ${QM_FILES})
 endif(APPLE)
 
 # target on WINDOWS
 if(WIN32)
     # set(WIN_RC CrashHandler.rc)
-    add_executable(QtCrashHandler MACOSX_BUNDLE ${SOURCES} ${WIN_RC} ${QM_FILES})
+    add_executable(QtCrashHandler ${SOURCES} ${WIN_RC} ${QM_FILES})
 endif(WIN32)
 
-target_link_libraries(QtCrashHandler Qt5::Widgets Qt5::Network)
+# target on LINUX
+if(LINUX)
+    # set(WIN_RC CrashHandler.rc)
+    add_executable(QtCrashHandler ${SOURCES} ${WIN_RC} ${QM_FILES})
+endif(LINUX)
+
+target_link_libraries(QtCrashHandler Qt5::Widgets Qt5::Network ${FRAMEWORKS})
 
 # configure install
 install (TARGETS QtCrashHandler DESTINATION Demo)

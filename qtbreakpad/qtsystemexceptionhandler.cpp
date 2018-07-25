@@ -194,8 +194,13 @@ void QtSystemExceptionHandler::init(const QString &libexecPath)
     s_startTime = QDateTime::currentDateTime();
 
 	s_crashHandlerPath = libexecPath + "/QtCrashHandler";
+
 #ifdef Q_OS_WIN
     s_crashHandlerPath = libexecPath + "/QtCrashHandler.exe";
+#endif
+
+#ifdef Q_OS_MACOS
+    s_crashHandlerPath = libexecPath + "/QtCrashHandler";
 #endif
 }
 

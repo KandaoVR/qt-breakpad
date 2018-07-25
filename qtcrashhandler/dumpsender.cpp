@@ -39,24 +39,32 @@
 #include <QTemporaryFile>
 #include <QUrl>
 
+static QString getApplicationArguments(int idx)
+{
+	if (QCoreApplication::arguments().size() > idx)
+		return QCoreApplication::arguments().at(idx);
+
+	return "";
+}
+
 DumpSender::DumpSender(QObject *parent) :
     QObject(parent),
     m_httpMultiPart(QHttpMultiPart::FormDataType)
 {
-    const QString dumpPath = QCoreApplication::arguments().at(1);
-    const QByteArray startupTime = QCoreApplication::arguments().at(2).toLocal8Bit();
-    const QByteArray applicationName = QCoreApplication::arguments().at(3).toLocal8Bit();
-    QByteArray applicationVersion = QCoreApplication::arguments().at(4).toLocal8Bit();
-    const QByteArray plugins = QCoreApplication::arguments().at(5).toLocal8Bit();
-    // QByteArray ideRevision = QCoreApplication::arguments().at(6).toLocal8Bit();
-    m_applicationFilePath = QCoreApplication::arguments().at(7);
+    const QString dumpPath = getApplicationArguments(1);
+    const QByteArray startupTime = getApplicationArguments(2).toLocal8Bit();
+    const QByteArray applicationName = getApplicationArguments(3).toLocal8Bit();
+    QByteArray applicationVersion = getApplicationArguments(4).toLocal8Bit();
+    const QByteArray plugins = getApplicationArguments(5).toLocal8Bit();
+    // QByteArray ideRevision = getApplicationArguments(6).toLocal8Bit();
+    m_applicationFilePath = getApplicationArguments(7);
 
     if (applicationVersion.isEmpty())
         applicationVersion = "1.0.0";
 
     QFile dumpFile(dumpPath, this);
     const bool isOpen = dumpFile.open(QIODevice::ReadOnly);
-    Q_ASSERT(isOpen);
+    //Q_ASSERT(isOpen);
     Q_UNUSED(isOpen);
 
     const QList<QPair<QByteArray, QByteArray> > pairList = {

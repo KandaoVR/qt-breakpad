@@ -35,19 +35,21 @@ int main(int argc, char *argv[])
 {
     QApplication application(argc, argv);
 
-    if (application.arguments().count() <= 1)
-        return 0;
-
-    const QString dumpPath = QApplication::arguments().at(1);
-    if (!QFileInfo(dumpPath).exists())
-        return 0;
+	if (application.arguments().count() > 1) {
+		const QString dumpPath = QApplication::arguments().at(1);
+		if (!QFileInfo(dumpPath).exists())
+			qWarning("dumpPath not exist");
+	}
+	else {
+		qWarning("no dumpPath specified");
+	}
 
     QNetworkProxyFactory::setUseSystemConfiguration(true);
 
     QHostInfo hostInfo = QHostInfo::fromName("crashes.qt.io");
 
-//    if (hostInfo.error() != QHostInfo::NoError)
-//        return 0;
+	if (hostInfo.error() != QHostInfo::NoError)
+		return 0;
 
     DumpSender dumpSender;
 

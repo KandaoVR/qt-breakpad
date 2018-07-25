@@ -39,13 +39,21 @@
 #include <QTemporaryFile>
 #include <QUrl>
 
+static QString getApplicationArguments(int idx)
+{
+	if (QCoreApplication::arguments().size() > idx)
+		return QCoreApplication::arguments().at(idx);
+
+	return "";
+}
+
 MainWidget::MainWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::MainWidget)
 {
     ui->setupUi(this);
 
-    ui->mainWidgetTopLabel.setText(tr("%1 has crashed").arg(Core::Constants::IDE_DISPLAY_NAME));
+    ui->mainWidgetTopLabel->setText(tr("%1 has crashed").arg(APP_DISPLAY_NAME));
 
     connect(ui->restartButton, &QAbstractButton::clicked, this, &MainWidget::restartApplication);
     connect(ui->quitButton, &QAbstractButton::clicked, this, &MainWidget::quitApplication);
@@ -118,12 +126,12 @@ void MainWidget::showDetails()
 
         detailText.append(tr("We specifically send the following information:\n\n"));
 
-        QString dumpPath = QApplication::arguments().at(1);
-        QString startupTime = QApplication::arguments().at(2);
-        QString applicationName = QApplication::arguments().at(3);
-        QString applicationVersion = QApplication::arguments().at(4);
-        QString plugins = QApplication::arguments().at(5);
-        QString ideRevision = QApplication::arguments().at(6);
+        QString dumpPath = getApplicationArguments(1);
+        QString startupTime = getApplicationArguments(2);
+        QString applicationName = getApplicationArguments(3);
+        QString applicationVersion = getApplicationArguments(4);
+        QString plugins = getApplicationArguments(5);
+        QString ideRevision = getApplicationArguments(6);
 
         detailText.append(QString("StartupTime: %1\n").arg(startupTime));
         detailText.append(QString("Vendor: %1\n").arg("Qt Project"));

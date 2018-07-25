@@ -72,3 +72,10 @@ target_link_libraries(QtCrashHandler Qt5::Widgets Qt5::Network)
 
 # configure install
 install (TARGETS QtCrashHandler DESTINATION Demo)
+
+# for vs debug
+if (WIN32)
+    add_custom_command(TARGET QtCrashHandler POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:QtCrashHandler> ${PROJECT_BINARY_DIR}/../$(Configuration)
+    )
+endif(WIN32)

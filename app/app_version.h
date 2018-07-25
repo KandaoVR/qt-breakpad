@@ -6,4 +6,4 @@
 
 // the configured options and settings for Tutorial
 #define APP_VERSION "1.0.0"
-#define APP_DISPLAY_NAME "Kandao QtBreadpad Demo"
+#define APP_DISPLAY_NAME "Kandao QtBreakpad Demo"

@@ -33,7 +33,7 @@ class DumpSender : public QObject
     Q_OBJECT
 
 public:
-    explicit DumpSender(QObject *parent = nullptr);
+    explicit DumpSender(QUrl submitUrl, QObject *parent = nullptr);
 
     int dumperSize() const;
 
@@ -47,6 +47,7 @@ signals:
     void uploadProgress(qint64 bytesSent, qint64 bytesTotal);
 
 private:
+	QUrl m_submitUrl;
     QHttpMultiPart m_httpMultiPart;
     QByteArray m_formData;
     QString m_applicationFilePath;

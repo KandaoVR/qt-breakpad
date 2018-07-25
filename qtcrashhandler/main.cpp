@@ -48,10 +48,11 @@ int main(int argc, char *argv[])
 
     QHostInfo hostInfo = QHostInfo::fromName("crashes.qt.io");
 
-	if (hostInfo.error() != QHostInfo::NoError)
-		return 0;
+	//if (hostInfo.error() != QHostInfo::NoError)
+	//	return 0;
 
-    DumpSender dumpSender;
+	QUrl submitUrl("http://127.0.0.1/submit");
+    DumpSender dumpSender(submitUrl);
 
     MainWidget mainWindow;
 

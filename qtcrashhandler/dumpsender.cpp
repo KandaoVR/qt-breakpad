@@ -47,8 +47,8 @@ static QString getApplicationArguments(int idx)
 	return "";
 }
 
-DumpSender::DumpSender(QObject *parent) :
-    QObject(parent),
+DumpSender::DumpSender(QUrl submitUrl, QObject *parent) :
+    m_submitUrl(submitUrl), QObject(parent),
     m_httpMultiPart(QHttpMultiPart::FormDataType)
 {
     const QString dumpPath = getApplicationArguments(1);
@@ -121,7 +121,7 @@ void DumpSender::sendDumpAndQuit()
 {
     QNetworkAccessManager *manager = new QNetworkAccessManager(this);
 
-    QNetworkRequest request(QUrl("http://crashes.qt.io/submit"));
+    QNetworkRequest request(m_submitUrl);
 
     const QByteArray boundary = m_httpMultiPart.boundary();
     request.setHeader(QNetworkRequest::ContentTypeHeader, "multipart/form-data; boundary=" + boundary);

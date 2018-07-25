@@ -35,7 +35,8 @@ int main(int argc, char *argv[])
     a.setApplicationName("testapp");
     a.setApplicationVersion("1.0.0");
 
-    QtSystemExceptionHandler exceptionHandler;
+	QString appPath = QCoreApplication::applicationDirPath();
+    QtSystemExceptionHandler exceptionHandler(appPath);
 
     QTimer::singleShot(100, [] { QtSystemExceptionHandler::crash(); });
 

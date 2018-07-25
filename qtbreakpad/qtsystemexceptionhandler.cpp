@@ -25,8 +25,8 @@
 
 #include "qtsystemexceptionhandler.h"
 
-#include <utils/fileutils.h>
-#include <utils/hostosinfo.h>
+//#include <utils/fileutils.h>
+//#include <utils/hostosinfo.h>
 
 #include <QCoreApplication>
 #include <QDebug>
@@ -59,6 +59,8 @@ static bool exceptionHandlerCallback(const google_breakpad::MinidumpDescriptor& 
         QCoreApplication::applicationFilePath()
     };
 
+	qWarning() << "[execute crash handler]" << QtSystemExceptionHandler::crashHandlerPath();
+	qWarning() << argumentList;
     return !QProcess::execute(QtSystemExceptionHandler::crashHandlerPath(), argumentList);
 }
 #elif defined(Q_OS_MACOS)
@@ -84,6 +86,8 @@ static bool exceptionHandlerCallback(const char *dump_dir,
         QCoreApplication::applicationFilePath()
     };
 
+	qWarning() << "[execute crash handler]" << QtSystemExceptionHandler::crashHandlerPath();
+	qWarning() << argumentList;
     return !QProcess::execute(QtSystemExceptionHandler::crashHandlerPath(), argumentList);
 }
 #elif defined(Q_OS_WIN)
@@ -103,6 +107,7 @@ static bool exceptionHandlerCallback(const wchar_t* dump_path,
 
     const QString path = QString::fromWCharArray(dump_path, int(wcslen(dump_path))) + '/'
             + QString::fromWCharArray(minidump_id, int(wcslen(minidump_id))) + ".dmp";
+
     const QStringList argumentList = {
         path,
         QString::number(QtSystemExceptionHandler::startTime().toTime_t()),
@@ -112,10 +117,29 @@ static bool exceptionHandlerCallback(const wchar_t* dump_path,
         QtSystemExceptionHandler::buildVersion(),
         QCoreApplication::applicationFilePath()
     };
-
+	
+	qWarning() << "[execute crash handler]" << QtSystemExceptionHandler::crashHandlerPath();
+	qWarning() << argumentList;
     return !QProcess::execute(QtSystemExceptionHandler::crashHandlerPath(), argumentList);
 }
 #endif
+
+static QDir getAppTempDir()
+{
+	QDir temp_dir = QDir::tempPath();
+	QString org_name = QCoreApplication::organizationName();
+	QString app_name = QCoreApplication::applicationName();
+
+	if (!org_name.isEmpty() && !app_name.isEmpty())
+		temp_dir = temp_dir.filePath(org_name + "." + app_name);
+	else if (!org_name.isEmpty())
+		temp_dir = temp_dir.filePath(org_name);
+	else if (!app_name.isEmpty())
+		temp_dir = temp_dir.filePath(app_name);
+
+	temp_dir.mkdir(".");
+	return temp_dir;
+}
 
 static QDateTime s_startTime;
 static QString s_plugins;
@@ -149,7 +173,7 @@ QtSystemExceptionHandler::QtSystemExceptionHandler(const QString &libexecPath)
 #elif defined(Q_OS_WIN)
 QtSystemExceptionHandler::QtSystemExceptionHandler(const QString &libexecPath)
     : exceptionHandler(new google_breakpad::ExceptionHandler(
-                           QDir::tempPath().toStdWString(),
+                           getAppTempDir().absolutePath().toStdWString(),
                            NULL,
                            exceptionHandlerCallback,
                            NULL,
@@ -168,7 +192,11 @@ QtSystemExceptionHandler::QtSystemExceptionHandler(const QString & /*libexecPath
 void QtSystemExceptionHandler::init(const QString &libexecPath)
 {
     s_startTime = QDateTime::currentDateTime();
-    s_crashHandlerPath = libexecPath + Utils::HostOsInfo::withExecutableSuffix("/qtcrashhandler");
+
+	s_crashHandlerPath = libexecPath + "/QtCrashHandler";
+#ifdef Q_OS_WIN
+    s_crashHandlerPath = libexecPath + "/QtCrashHandler.exe";
+#endif
 }
 
 QtSystemExceptionHandler::~QtSystemExceptionHandler()

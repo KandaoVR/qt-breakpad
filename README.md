@@ -1,8 +1,8 @@
 ## Kandao QtBreakpad Demo
 
-1. This a demo to handle c++ crash with [google breakpad](https://github.com/google/breakpad) and lanch a Qt app to send crash log back to server.
+1. This a demo to handle c++ crash with [google breakpad](https://github.com/google/breakpad) and launch a Qt app to send crash log back to server.
 2. Most of the code are extracted from [Qt Creator](https://github.com/qt-creator/qt-creator) project.
-3. The Demo includes a `QtBreakpadDemo` which crashes, lauching the `QtCrashHandler` afterwards.
+3. The Demo includes a `QtBreakpadDemo` which crashes, launching the `QtCrashHandler` afterwards.
 
 ![]("docs/QtBreakpadDemo-screenshot-win.png")
     

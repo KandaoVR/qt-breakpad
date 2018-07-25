@@ -33,6 +33,11 @@
 - example: cmake -DCMAKE_PREFIX_PATH=~/Qt/5.11.1/clang_64/ -DCMAKE_INSTALL_RPATH_USE_LINK_PATH="ON" ../
 - reference: https://stackoverflow.com/questions/47697761/cmake-run-time-error-dyld-library-not-loaded-for-dynamically-linked-resource
 
+- If the main app is built with bundle, i.e. add `MACOSX_BUNDLE` to **add_executable**. For example:
+    add_executable(QtBreakpadDemo MACOSX_BUNDLE ${SOURCES} ${BREAKPAD_SRCS} ${ICON_FILE} ${QM_FILES})
+    
+- The binary version of `QtCrashHandler` should be copied to **QtBreakpad.app/Contents/MaxOS/**, so that the inner binary `QtBreakpad` is able to call `QtCrashHandler` during crashing.
+
 ### 3. Linux
 - Should be working. lol
 - Pull request are welcomed!

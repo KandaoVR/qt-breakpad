@@ -4,7 +4,7 @@
 2. Most of the code are extracted from [Qt Creator](https://github.com/qt-creator/qt-creator) project.
 3. The Demo includes a `QtBreakpadDemo` which crashes, launching the `QtCrashHandler` afterwards.
 
-![alt text](https://raw.githubusercontent.com/KandaoVR/qt-breakpad/master/docs/QtBreakpadDemo-screenshot-win.png "QtBreakpad Demo")
+![Demo Win](https://raw.githubusercontent.com/KandaoVR/qt-breakpad/master/docs/QtBreakpadDemo-screenshot-win.png "QtBreakpad Demo")
     
 -----
 ## Dependency
@@ -24,13 +24,16 @@
 ### 2. Mac
     >> mkdir build
     >> cd build
-    >> cmake -DCMAKE_PREFIX_PATH=/path-to-qt/ -DCMAKE_INSTALL_RPATH_USE_LINK_PATH="ON" ../
+    >> cmake -DCMAKE_PREFIX_PATH=/path-to-qt-clang/ -DCMAKE_INSTALL_RPATH_USE_LINK_PATH="ON" ../
     >> make -j8 install
 
     >> cd install/Demo
     >> ./QtBreakpadDemo
 
-- example: cmake -DCMAKE_PREFIX_PATH=~/Qt/5.11.1/clang_64/ -DCMAKE_INSTALL_RPATH_USE_LINK_PATH="ON" ../
+- cmake command example: 
+
+        cmake -DCMAKE_PREFIX_PATH=~/Qt/5.11.1/clang_64/ -DCMAKE_INSTALL_RPATH_USE_LINK_PATH="ON" ../
+
 - reference: https://stackoverflow.com/questions/47697761/cmake-run-time-error-dyld-library-not-loaded-for-dynamically-linked-resource
 
 #### OSX Bundle
@@ -42,7 +45,7 @@
 
 ### 3. Linux
 - Should be working. lol
-- Pull request are welcomed!
+- Pull requests are welcomed!
 
 -----
 - contact Neil for more information neil.szj@kandaovr.com

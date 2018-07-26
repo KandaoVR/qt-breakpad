@@ -35,7 +35,8 @@
 
 #### OSX Bundle
 - If the main app is built with bundle, i.e. add `MACOSX_BUNDLE` to **add_executable**. For example:
-    add_executable(QtBreakpadDemo MACOSX_BUNDLE ${SOURCES} ${BREAKPAD_SRCS} ${ICON_FILE} ${QM_FILES})
+        
+        add_executable(QtBreakpadDemo MACOSX_BUNDLE ${SOURCES} ${BREAKPAD_SRCS} ${ICON_FILE} ${QM_FILES})
     
 - The binary version of `QtCrashHandler` should be copied to **QtBreakpad.app/Contents/MaxOS/**, so that the inner binary `QtBreakpad` is able to call `QtCrashHandler` during crashing.
 
